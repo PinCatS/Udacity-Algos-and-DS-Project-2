@@ -28,6 +28,8 @@ def rotated_array_search(input_list, number):
                 end = mid - 1
     return -1
 
+
+# Helper functions for testing
 def linear_search(input_list, number):
     for index, element in enumerate(input_list):
         if element == number:
@@ -42,6 +44,8 @@ def test_function(test_case):
     else:
         print("Fail")
 
+
+# Test cases
 test_function([[6, 7, 8, 9, 10, 1, 2, 3, 4], 6])
 test_function([[6, 7, 8, 9, 10, 1, 2, 3, 4], 1])
 test_function([[6, 7, 8, 1, 2, 3, 4], 8])

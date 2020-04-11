@@ -6,11 +6,12 @@ class TrieNode:
         self.word_end = False
         self.children = defaultdict(TrieNode)
 
-    def suffixes(self, suffix = '', s = []):
+    def suffixes(self, suffix = ''):
         ## Recursive function that collects the suffix for 
         ## all complete words below this point
+        s = []
         for c in self.children:
-            self.children[c].suffixes(suffix + c)
+            s += self.children[c].suffixes(suffix + c)
 
         if self.word_end and suffix is not '':
             s.append(suffix)
@@ -60,6 +61,8 @@ def autocomplete(prefix):
     else:
         print('')
 
+
+# Test env setup
 MyTrie = Trie()
 wordList = [
     "ant", "anthology", "antagonist", "antonym", 
@@ -69,14 +72,21 @@ wordList = [
 for word in wordList:
     MyTrie.insert(word)
 
-autocomplete('fun')
-print('-'*10)
-autocomplete('')
-print('-'*10)
-autocomplete(None)
-print('-'*10)
+
+# Test cases
+print('Test case 1:')
+autocomplete('fun')         # ction
+
+print('Test case 2:')
+autocomplete('')            # empty
+
+print('Test case 3:')
+autocomplete(None)          # empty
+
+print('Test case 4:')       # ar not found
 autocomplete('ar')
-print('-'*10)
+
+print('Test case 5:')       # nthology, ntagonist, ntonym, nt
 autocomplete('a')
 
 

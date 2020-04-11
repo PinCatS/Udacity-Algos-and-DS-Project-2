@@ -1,4 +1,19 @@
 def partition(arr, left, right, pivot_index):
+    """
+    Partition the array into three groups: less that pivot, equal to it and more than pivot
+
+    Args:
+       input_list(list): Input List
+       left(int): start index
+       right(int): end index
+       pivot_index(int): index of the pivot element
+
+    Returns:
+       (int),(int): left and right index - boundary of the pivot element on the right place
+       when array is sorted. All elements to the left index are smaller than the pivot,
+       all element to the right inidex are bigger. All elements between left and right (including them)
+       are equla to the pivot.
+    """
     pivot = arr[pivot_index]
     store_index = left
 
@@ -23,6 +38,14 @@ def partition(arr, left, right, pivot_index):
 
 
 def bubble_sort(arr):
+    """
+    Bubble sort
+
+    Args:
+       input_list(list): Input List
+    Returns:
+       Sorting happens in place, thus origina array is modified, nothing is returned
+    """
     i = 0
     while i < len(arr) - 1:
         j = 0
@@ -34,6 +57,21 @@ def bubble_sort(arr):
 
 
 def select_pivot(arr, left, right):
+    """
+    Selects the pivot element by choosing the first, last and the middle
+    element from the array and returns the index of their median
+    Used by the quicksort functions.
+
+    bubble sort is used to sort the arrau of three. Because it sorts only three
+    elemnts, the time complexity can be considered as O(1)
+
+    Args:
+        arr(list): input_list array
+        left(int): start index of a subarray
+        right(int): end index of a subarray
+    Returns:
+       (int): index of median of three elements(first, last, middle)
+    """
     if (right - left) < 2:
         return left
     
@@ -41,13 +79,30 @@ def select_pivot(arr, left, right):
     arr2 = [(arr[left], left), (arr[middle], middle), (arr[right], right)]
     bubble_sort(arr2)
     return arr2[1][1]
-    
 
+    
 def quicksort(arr, left, right):
+    """
+    Sort elements in ascending order. Intro sorting implementation of quicksort
+
+    Uses median of left, right and middle element of th array as a pivot
+
+    Recursion is used. Depending on the size of the left and right subarray I select
+    against what I need to call recursion.
+    It guarantees O(logn) space complexity in the worst case instead of the average.
+
+    Partition returns two indexes instead of one
+    to prevent degradation of efficiency in case of many duplicates.
+
+    Args:
+       arr(list): list of elements to sort
+       left(int): star index of the array/subarray
+       right(int): end index of the array/subarray
+    Returns:
+       array is sorted in place, so nothing is returned
+    """
     while left < right:
-        #pivot_index = randint(left, right)
         pivot_index = select_pivot(arr, left, right)
-        #pivot_index = left
         mid_left, mid_right = partition(arr, left, right, pivot_index)
         if (mid_left - left) < (right - mid_right):
             quicksort(arr, left, mid_left - 1)
@@ -79,8 +134,10 @@ def rearrange_digits(input_list):
     return [first_number, second_number]
 
 
+# Helper function for testing
 def test_function(test_case):
     output = rearrange_digits(test_case[0])
+    print(output)
     solution = test_case[1]
     if sum(output) == sum(solution):
         print("Pass")
@@ -88,5 +145,8 @@ def test_function(test_case):
         print("Fail")
 
 
+# Test cases
 test_function([[1, 2, 3, 4, 5], [542, 31]])
 test_function([[4, 6, 2, 5, 9, 8], [964, 852]])
+test_function([[0, 0, 0, 0, 0], [0, 0]])
+test_function([[], [0, 0]])
